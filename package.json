@@ -1,0 +1,33 @@
+{
+  "name": "how-much-left-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miguelmarquezblasco/how-much-left-api.git"
+  },
+  "author": "miguelmarquezblasco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miguelmarquezblasco/how-much-left-api/issues"
+  },
+  "homepage": "https://github.com/miguelmarquezblasco/how-much-left-api#readme",
+  "dependencies": {
+    "cors": "2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "standard": "^16.0.3"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
+}
