@@ -6,7 +6,9 @@ const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
   email: { type: String, index: true, unique: true, required: true },
-  books: [{ type: Schema.Types.ObjectId, ref: 'Book' }]
+  books: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+  movies: [{ type: Schema.Types.ObjectId, ref: 'Movie' }],
+  videogames: [{ type: Schema.Types.ObjectId, ref: 'Videogame' }]
 })
 
 userSchema.set('toJSON', {

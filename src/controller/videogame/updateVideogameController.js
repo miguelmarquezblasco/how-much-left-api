@@ -7,7 +7,8 @@ controller.put('/:id', userExtractor, async (request, response, next) => {
 
   const updatedVideogame = {
     title: videogame.title,
-    image: videogame.image
+    image: videogame.image,
+    date: videogame.date
   }
 
   try {

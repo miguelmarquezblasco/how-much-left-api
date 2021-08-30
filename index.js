@@ -13,10 +13,8 @@ app.use('/image', express.static('image'))
 const userRoute = '/user'
 
 const createUserController = require('./src/controller/user/createUserController')
-const getUserController = require('./src/controller/user/getUserController')
 
 app.use(userRoute, createUserController)
-app.use(userRoute, getUserController)
 
 const loginRoute = '/login'
 

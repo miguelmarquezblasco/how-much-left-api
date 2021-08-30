@@ -7,7 +7,8 @@ controller.put('/:id', userExtractor, async (request, response, next) => {
 
   const updatedBook = {
     title: book.title,
-    image: book.image
+    image: book.image,
+    date: book.date
   }
 
   try {
