@@ -3,73 +3,70 @@ const cors = require('cors')
 
 const app = express()
 
+require('dotenv').config()
+require('./src/database/mongo')
+
 app.use(cors())
 app.use(express.json())
+app.use('/image', express.static('image'))
 
-let books = [
-  {
-    id: 1,
-    title: '1984',
-    date: ''
-  },
-  {
-    id: 2,
-    title: 'La milla verde',
-    date: ''
-  },
-  {
-    id: 3,
-    title: 'La catedral del mar',
-    date: ''
-  }
-]
+const userRoute = '/user'
 
-app.get('/', (req, res) => {
-  res.send('Hola Mundo')
-})
+const createUserController = require('./src/controller/user/createUserController')
+const getUserController = require('./src/controller/user/getUserController')
 
-app.get('/books', (req, res) => {
-  res.json(books)
-})
+app.use(userRoute, createUserController)
+app.use(userRoute, getUserController)
 
-app.get('/book/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const book = books.find(book => book.id === id)
+const loginRoute = '/login'
 
-  book ? res.json(book) : res.status(404).end()
-})
+const loginController = require('./src/controller/user/login/loginController')
 
-app.delete('/book/:id', (req, res) => {
-  const id = Number(req.params.id)
-  books = books.filter(book => book.id !== id)
+app.use(loginRoute, loginController)
 
-  res.status(204).end()
-})
+const bookRoute = '/book'
 
-app.post('/book', (req, res) => {
-  const book = req.body
+const createBookController = require('./src/controller/book/createBookController')
+const updateBookController = require('./src/controller/book/updateBookController')
+const deleteBookController = require('./src/controller/book/deleteBookController')
+const getBookController = require('./src/controller/book/getBookController')
 
-  if (!book || !book.title) {
-    res.status(400).json({ error: 'Missing book' })
-  }
+app.use(bookRoute, createBookController)
+app.use(bookRoute, updateBookController)
+app.use(bookRoute, deleteBookController)
+app.use(bookRoute, getBookController)
 
-  const ids = books.map(book => book.id)
-  const maxId = Math.max(...ids)
+const movieRoute = '/movie'
 
-  const newBook = {
-    id: maxId + 1,
-    title: book.title,
-    date: new Date().toISOString()
-  }
+const createMovieController = require('./src/controller/movie/createMovieController')
+const updateMovieController = require('./src/controller/movie/updateMovieController')
+const deleteMovieController = require('./src/controller/movie/deleteMovieController')
+const getMovieController = require('./src/controller/movie/getMovieController')
 
-  res.status(201).json(newBook)
-})
+app.use(movieRoute, createMovieController)
+app.use(movieRoute, updateMovieController)
+app.use(movieRoute, deleteMovieController)
+app.use(movieRoute, getMovieController)
 
-app.use((req, res, next) => {
-  res.status(404).json({ error: 'Route not found' })
-})
+const videogameRoute = '/videogame'
 
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-  console.log(`Escuchando las peticiones en el puerto ${PORT}`)
-})
+const createVideogameController = require('./src/controller/videogame/createVideogameController')
+const updateVideogameController = require('./src/controller/videogame/updateVideogameController')
+const deleteVideogameController = require('./src/controller/videogame/deleteVideogameController')
+const getVideogameController = require('./src/controller/videogame/getVideogameController')
+
+app.use(videogameRoute, createVideogameController)
+app.use(videogameRoute, updateVideogameController)
+app.use(videogameRoute, deleteVideogameController)
+app.use(videogameRoute, getVideogameController)
+
+const notFound = require('./src/middleware/error/notFound')
+const errorHandler = require('./src/middleware/error/errorHandler')
+
+app.use(notFound)
+app.use(errorHandler)
+
+const PORT = process.env.PORT
+const server = app.listen(PORT, () => console.log(`Escuchando las peticiones en el puerto ${PORT}`))
+
+module.exports = { app, server }
